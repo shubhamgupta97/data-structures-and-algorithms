@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 
 void selectionSort(int *arr, int n) {
     int i, j, min, temp;
@@ -28,10 +29,26 @@ void display(const char* msg, int *arr, int n) {
     printf("\n");
 }
 
+int getInput(int **arr) {
+    int n, i;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    *arr = (int*)calloc(n, sizeof(int));
+
+    printf("Enter the elements of the array: ");
+    for(i = 0; i < n; i++)
+        scanf("%d", (*arr)+i);
+
+    return n;
+}
+
 int main() {
-    int arr[] = {8, 2, 1, 4, 6, 5, 7, 9};
-    display("Original Array", arr, 8);
+    int n, *arr;
+    n = getInput(&arr);
     
+    display("Original Array", arr, 8);
     selectionSort(arr, 8);
     display("Sorted Array", arr, 8);
     

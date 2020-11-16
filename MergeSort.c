@@ -1,8 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void display(int *arr, int size) {
-    for(int i = 0; i < size; i++)
+void display(const char *msg, int *arr, int size) {
+    int i;
+    
+    printf("%s:\t", msg);
+    for(i = 0; i < size; i++)
         printf("%d\t", arr[i]);
     printf("\n");
 }
@@ -46,11 +49,28 @@ void mergeSort(int arr[], int L, int R) {
     }
 }
 
-int main() {
-    int arr[] = {8, 2, 1, 4, 6, 7, 9, 3};
+int getInput(int **arr) {
+    int n, i;
 
-    display(arr, 8);
-    mergeSort(arr, 0, 7);
-    display(arr, 8);
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    *arr = (int*)calloc(n, sizeof(int));
+
+    printf("Enter the elements of the array: ");
+    for(i = 0; i < n; i++)
+        scanf("%d", (*arr)+i);
+
+    return n;
+}
+
+int main() {
+    int n, *arr;
+    n = getInput(&arr);
+
+    display("Original Array", arr, n);
+    mergeSort(arr, 0, n-1);
+    display("Sorted Array", arr, n);
+
     return 0;
 }

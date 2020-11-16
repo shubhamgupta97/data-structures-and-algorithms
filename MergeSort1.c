@@ -1,44 +1,44 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void display(int *arr, int size) {
-    for(int i = 0; i < size; i++)
+void display(const char *msg, int *arr, int size) {
+    int i;
+    
+    printf("%s:\t", msg);
+    for(i = 0; i < size; i++)
         printf("%d\t", arr[i]);
     printf("\n");
 }
 
 void merge(int *L, int L_size, int *R, int R_size, int *arr) {
-    int i = 0, j = 0, k = 0;
+    int i, j, k;
+
+    i = 0, j = 0, k = 0;
 
     while(i < L_size && j < R_size) {
-        if(L[i] < R[j]) {
-            arr[k] = L[i];
-            i++;
-        } else {
-            arr[k] = R[j];
-            j++;
-        }
-        k++;
+        if(L[i] < R[j])
+            arr[k++] = L[i++];
+        else 
+            arr[k++] = R[j++];
     }
 
-    while(i < L_size) {
+    while(i < L_size) 
         arr[k++] = L[i++];
-    }
 
-    while(j < R_size) {
+    while(j < R_size)
         arr[k++] = R[j++];
-    }
 }
 
 void mergeSort(int *arr, int n) {
+    int i, mid, *left, *right;
     if(n > 1) {
-        int mid = n/2;
-        int *left = (int *) malloc(mid*sizeof(int));
-        int *right = (int *) malloc((n-mid)*sizeof(int));
+        mid = n/2;
+        left = (int *) malloc(mid*sizeof(int));
+        right = (int *) malloc((n-mid)*sizeof(int));
 
 
-        for(int i = 0; i < mid; i++) left[i] = arr[i];
-        for(int i = mid; i < n; i++) right[i-mid] = arr[i]; 
+        for(i = 0; i < mid; i++) left[i] = arr[i];
+        for(i = mid; i < n; i++) right[i-mid] = arr[i]; 
 
         mergeSort(left, mid);
         mergeSort(right, n-mid);
@@ -49,10 +49,28 @@ void mergeSort(int *arr, int n) {
     }
 }
 
+int getInput(int **arr) {
+    int n, i;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    *arr = (int*)calloc(n, sizeof(int));
+
+    printf("Enter the elements of the array: ");
+    for(i = 0; i < n; i++)
+        scanf("%d", (*arr)+i);
+
+    return n;
+}
+
 int main() {
-    int arr[] = {8, 2, 1, 4, 6, 7, 9, 3};
-    display(arr, 8);
-    mergeSort(arr, 8);
-    display(arr, 8);
+    int n, *arr;
+    n = getInput(&arr);
+
+    display("Original Array", arr, n);
+    mergeSort(arr, n);
+    display("Sorted Array", arr, n);
+
     return 0;
 }

@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#define RANGE 10
 
 int* countingSort(int *arr, int n, int range) {
     int i;
@@ -23,18 +24,35 @@ int* countingSort(int *arr, int n, int range) {
 
 void display(const char *msg, int *arr, int size) {
     int i;
+
     printf("%s:\t", msg);
     for(i = 0; i < size; i++)
         printf("%d\t", arr[i]);
     printf("\n");
 }
 
-int main() {
-    int array[] = {3, 4, 2, 1, 3, 1};
-    int *arr = array;
+int getInput(int **arr) {
+    int n, i;
 
-    display("Original Array", arr, 6);
-    arr = countingSort(arr, 6, 10);
-    display("Sorted Array", arr, 6);
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    *arr = (int*)calloc(n, sizeof(int));
+
+    printf("Enter the elements of the array: ");
+    for(i = 0; i < n; i++)
+        scanf("%d", (*arr)+i);
+
+    return n;
+}
+
+int main() {
+    int n, *arr;
+    n = getInput(&arr);
+
+    display("Original Array", arr, n);
+    arr = countingSort(arr, n, RANGE);
+    display("Sorted Array", arr, n);
+
     return 0;
 }

@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 
 void insertionSort(int *arr, int n) {
     int i, j, key;
@@ -14,15 +15,38 @@ void insertionSort(int *arr, int n) {
     }
 }
 
-void display(int *arr, int n) {
-    for(int i = 0; i < n; i++)
+void display(const char* msg, int *arr, int n) {
+    int i;
+
+    printf("%s:\t", msg);
+    for(i = 0; i < n; i++) 
         printf("%d\t", arr[i]);
+
     printf("\n");
 }
 
-int main () {
-    int arr[] = {8,2,1,4,6,3,7,9};
-    insertionSort(arr, 8);
-    display(arr, 8);
+int getInput(int **arr) {
+    int n, i;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    *arr = (int*)calloc(n, sizeof(int));
+
+    printf("Enter the elements of the array: ");
+    for(i = 0; i < n; i++)
+        scanf("%d", (*arr)+i);
+
+    return n;
+}
+
+int main() {
+    int n, *arr;
+    n = getInput(&arr);
+
+    display("Original Array", arr, n);
+    insertionSort(arr, n);
+    display("Sorted Array", arr, n);
+    
     return 0;
 }

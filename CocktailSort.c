@@ -1,4 +1,14 @@
 #include<stdio.h>
+#include<stdlib.h>
+
+void display(const char *msg, int *arr, int size) {
+    int i;
+    
+    printf("%s:\t", msg);
+    for(i = 0; i < size; i++)
+        printf("%d\t", arr[i]);
+    printf("\n");
+}
 
 void cocktailSort(int *arr, int n) {
     int i, temp, isSwapped, start, end, noOfForwardPasses, noOfBackwardPasses;
@@ -41,23 +51,31 @@ void cocktailSort(int *arr, int n) {
         start++;
     }
 
+    display("Sorted Array" ,arr, 8);
     printf("Number of forward passes: %d\nNumber of backward passes: %d\n", noOfForwardPasses, noOfBackwardPasses);
 }
 
-void display(int *arr, int n) {
-    int i;
+int getInput(int **arr) {
+    int n, i;
 
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    *arr = (int*)calloc(n, sizeof(int));
+
+    printf("Enter the elements of the array: ");
     for(i = 0; i < n; i++)
-        printf("%d\t", arr[i]);
-    printf("\n");
-    
+        scanf("%d", (*arr)+i);
+
+    return n;
 }
 
 int main() {
-    int arr[] = {8, 2, 1, 4, 6, 7, 9, 3};
-    // int arr[] = {1, 2, 3, 4, 6, 7, 9, 8};
-    display(arr, 8);
-    cocktailSort(arr, 8);
-    display(arr, 8);
+    int n, *arr;
+    n = getInput(&arr);
+
+    display("Original Array", arr, n);
+    cocktailSort(arr, n);
+    
     return 0;
 }
